@@ -1,1 +1,584 @@
-/* Add your styles here */
+:root {
+  --bg: #eaf0ff;
+  --card: #ffffff;
+  --card-contrast: #f3f6ff;
+  --primary: #2563eb;
+  --primary-strong: #1d4ed8;
+  --text: #0f172a;
+  --text-dim: #475569;
+  --border: rgba(15, 23, 42, 0.12);
+  --shadow-1: 0 18px 50px rgba(37, 99, 235, 0.16), 0 8px 20px rgba(15, 23, 42, 0.08);
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --lumo-font-family: "Inter", system-ui, -apple-system, sans-serif;
+  --lumo-primary-color: var(--primary);
+  --lumo-base-color: #ffffff;
+  --lumo-body-text-color: var(--text);
+  --lumo-primary-text-color: #0f172a;
+  --lumo-border-radius-m: var(--radius-md);
+  --lumo-border-radius-l: var(--radius-lg);
+  --lumo-contrast-5pct: rgba(15, 23, 42, 0.04);
+  --lumo-contrast-10pct: rgba(15, 23, 42, 0.08);
+  --lumo-contrast-20pct: rgba(15, 23, 42, 0.14);
+}
+
+body,
+.v-system {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.muted {
+  color: var(--text-dim);
+}
+
+.retro-page,
+.welcome-view {
+  min-height: 100%;
+  background: radial-gradient(circle at 20% 20%, rgba(91, 141, 239, 0.1), transparent 35%),
+    radial-gradient(circle at 80% 0%, rgba(139, 92, 246, 0.1), transparent 35%),
+    var(--bg);
+  color: var(--text);
+  padding: 2rem;
+}
+
+/* Cards and panels */
+.retro-hero,
+.retro-section,
+.retro-card,
+.retro-contact,
+.retro-login-form,
+.welcome-card {
+  background: linear-gradient(135deg, var(--card), var(--card-contrast));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-1), 0 0 0 1px rgba(255, 255, 255, 0.03);
+  color: var(--text);
+}
+
+.retro-hero {
+  padding: 2.25rem;
+}
+
+.retro-title {
+  margin: 0;
+  font-size: 2.3rem;
+  letter-spacing: 0.04em;
+}
+
+.retro-subtitle {
+  margin: 0.5rem 0 0;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+.retro-section-title {
+  color: var(--text);
+  font-size: 1.3rem;
+  letter-spacing: 0.03em;
+  margin: 0 0 0.75rem 0;
+}
+
+.retro-profile-copy {
+  margin: 0 0 1rem 0;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+.retro-badge {
+  background: rgba(91, 141, 239, 0.12);
+  border: 1px solid rgba(91, 141, 239, 0.3);
+  border-radius: 999px;
+  padding: 0.4rem 0.85rem;
+}
+
+.retro-badge-text {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+.retro-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.retro-card {
+  padding: 1.2rem;
+  min-height: 180px;
+}
+
+.retro-card-icon {
+  color: var(--primary);
+  width: 26px;
+  height: 26px;
+}
+
+.retro-card-title {
+  margin: 0.4rem 0;
+  font-size: 1.05rem;
+}
+
+.retro-card-copy {
+  margin: 0;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+.retro-steps .retro-step {
+  padding: 1rem 1.2rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--card-contrast);
+  box-shadow: var(--shadow-1);
+}
+
+.retro-step-title {
+  margin: 0;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.retro-step-command {
+  margin: 0.2rem 0 0;
+  color: var(--primary);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.retro-step-detail {
+  margin: 0.2rem 0 0;
+  color: var(--text-dim);
+  font-size: 0.95rem;
+}
+
+.retro-contact {
+  padding: 1.75rem;
+}
+
+.retro-contact-copy {
+  margin: 0 0 1rem 0;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+.retro-login-shell {
+  min-height: 100%;
+  padding: 2rem;
+}
+
+.retro-login-form {
+  min-width: 320px;
+  max-width: 420px;
+  padding: 2rem;
+}
+
+.retro-login-form vaadin-login-form {
+  width: 100%;
+}
+
+/* Welcome */
+.welcome-card {
+  max-width: 720px;
+  width: 100%;
+  padding: 2.5rem;
+}
+
+.welcome-title {
+  margin: 0 0 0.5rem 0;
+  font-size: 2.1rem;
+  letter-spacing: 0.02em;
+}
+
+.welcome-subtitle {
+  margin: 0 0 1.5rem 0;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+.welcome-actions {
+  gap: 0.75rem;
+}
+
+.welcome-button-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-strong));
+  color: #ffffff;
+  border: none;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  box-shadow: 0 12px 30px rgba(91, 141, 239, 0.35);
+}
+
+.welcome-button-secondary {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+/* Layout tweaks */
+vaadin-app-layout.app-shell {
+  background: var(--bg);
+  color: var(--text);
+}
+
+vaadin-app-layout.app-shell::part(navbar) {
+  padding: 0.75rem 1.25rem;
+  background: linear-gradient(135deg, var(--card), var(--card-contrast));
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow-1);
+}
+
+vaadin-app-layout.app-shell::part(drawer) {
+  background: var(--card);
+  border-right: 1px solid var(--border);
+}
+
+.app-header {
+  background: linear-gradient(135deg, var(--card), var(--card-contrast));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-1);
+}
+
+.app-view-title {
+  margin: 0;
+  letter-spacing: 0.03em;
+  color: var(--text);
+}
+
+.app-name {
+  color: var(--text);
+  letter-spacing: 0.05em;
+}
+
+.drawer-header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.drawer-scroller {
+  padding: 0.25rem 0.75rem 0.75rem;
+}
+
+.drawer-nav {
+  color: var(--text);
+}
+
+.drawer-nav vaadin-side-nav-item {
+  border-radius: var(--radius-md);
+  color: inherit;
+}
+
+.drawer-nav vaadin-side-nav-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.drawer-nav vaadin-side-nav-item[selected] {
+  background: rgba(91, 141, 239, 0.14);
+  border: 1px solid rgba(91, 141, 239, 0.35);
+}
+
+.drawer-nav vaadin-side-nav-item svg {
+  color: var(--primary);
+}
+
+.drawer-footer {
+  padding: 1rem;
+  border-top: 1px solid var(--border);
+  background: var(--card);
+}
+
+.drawer-footer-bar {
+  width: 100%;
+}
+
+.logout-button {
+  width: 100%;
+  font-weight: 700;
+}
+
+/* Auth */
+.auth-shell {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: radial-gradient(circle at 20% 20%, rgba(37, 99, 235, 0.16), transparent 35%),
+    radial-gradient(circle at 80% 0%, rgba(14, 165, 233, 0.16), transparent 35%),
+    linear-gradient(135deg, #f7fbff, #eaf0ff 40%, #e2ebff);
+}
+
+.auth-card {
+  width: min(440px, 100%);
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 16px 40px rgba(37, 99, 235, 0.18), 0 6px 18px rgba(15, 23, 42, 0.1);
+  padding: 2.25rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-card::before {
+  content: "";
+  position: absolute;
+  inset: -20% -10%;
+  background: radial-gradient(circle at 20% 20%, rgba(37, 99, 235, 0.16), transparent 35%),
+    radial-gradient(circle at 80% 0%, rgba(14, 165, 233, 0.16), transparent 25%);
+  pointer-events: none;
+}
+
+.auth-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.auth-title {
+  margin: 0;
+  letter-spacing: 0.04em;
+  color: #0b1b40;
+}
+
+.auth-card .muted {
+  margin: 0;
+  line-height: 1.5;
+  color: #334155;
+}
+
+.auth-card vaadin-login-form {
+  width: 100%;
+}
+
+.auth-card vaadin-button {
+  width: 100%;
+  margin-top: 0.25rem;
+}
+
+.login-card {
+  max-width: 480px;
+}
+
+.login-card vaadin-login-form {
+  --lumo-body-text-color: var(--text);
+  --lumo-contrast-5pct: rgba(15, 23, 42, 0.04);
+  --lumo-contrast-10pct: rgba(15, 23, 42, 0.08);
+  --lumo-contrast-20pct: rgba(15, 23, 42, 0.14);
+  --vaadin-input-field-background: #f3f6ff;
+  --vaadin-input-field-border-color: rgba(15, 23, 42, 0.08);
+  --vaadin-input-field-hover-highlight: var(--primary);
+  --vaadin-input-field-focus-highlight: var(--primary);
+  --vaadin-input-field-foreground: var(--text);
+  --vaadin-input-field-placeholder-color: #64748b;
+  --vaadin-input-field-border-radius: var(--radius-md);
+  --vaadin-input-field-border-width: 1px;
+  --vaadin-input-field-padding: 0.6rem 0.75rem;
+}
+
+.login-card vaadin-login-form::part(form) {
+  padding: 0;
+  row-gap: 0.8rem;
+}
+
+.login-card vaadin-login-form::part(form-title) {
+  color: #0b1b40;
+  font-size: 1.35rem;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.25rem;
+}
+
+.login-card vaadin-login-form::part(submit-button) {
+  background: linear-gradient(135deg, var(--primary), var(--primary-strong));
+  color: #ffffff;
+  border: none;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  box-shadow: 0 12px 30px rgba(91, 141, 239, 0.35);
+  border-radius: var(--radius-md);
+}
+
+.login-card vaadin-login-form::part(error-message) {
+  background: rgba(239, 68, 68, 0.14);
+  border: 1px solid rgba(239, 68, 68, 0.32);
+  border-radius: var(--radius-md);
+}
+
+.login-card vaadin-login-form::part(forgot-password-button) {
+  color: var(--text);
+}
+
+.login-card vaadin-login-form::part(vaadin-login-form-wrapper) {
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+.login-card vaadin-login-form::part(form-footer) {
+  margin-top: 0.25rem;
+  padding-top: 0.25rem;
+}
+
+.registration-card {
+  width: min(720px, 100%);
+  gap: 1.25rem;
+}
+
+.registration-form {
+  --vaadin-form-layout-row-gap: 0.9rem;
+  --vaadin-form-layout-column-gap: 1rem;
+}
+
+.registration-actions vaadin-button {
+  width: 100%;
+}
+
+/* Data view */
+.data-view {
+  padding: 1.5rem;
+  gap: 1rem;
+}
+
+.data-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.data-header-text h2 {
+  margin: 0;
+  letter-spacing: 0.03em;
+}
+
+.data-header-text p {
+  margin: 0.2rem 0 0;
+}
+
+.data-role-banner {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.65rem 0.85rem;
+  background: rgba(91, 141, 239, 0.15);
+  border: 1px solid rgba(91, 141, 239, 0.35);
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  color: var(--text);
+}
+
+.data-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+  width: 100%;
+  align-items: start;
+}
+
+.data-card {
+  background: linear-gradient(135deg, var(--card), var(--card-contrast));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-1), 0 0 0 1px rgba(255, 255, 255, 0.02);
+  padding: 1.25rem;
+}
+
+.data-card-header {
+  margin: 0 0 0.75rem 0;
+}
+
+.data-card h3 {
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+.data-card .muted {
+  margin: 0.25rem 0 0;
+  color: var(--text-dim);
+}
+
+.data-grid {
+  --vaadin-grid-cell-padding: 0.6rem 0.9rem;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.data-grid::part(header-cell) {
+  background: var(--card-contrast);
+  color: var(--text-dim);
+}
+
+.data-grid::part(body-cell) {
+  color: var(--text);
+}
+
+.data-grid::part(row) {
+  border-color: var(--border);
+}
+
+.data-form-card .data-form {
+  gap: 0.6rem;
+}
+
+.data-form-card vaadin-text-field,
+.data-form-card vaadin-text-area {
+  width: 100%;
+}
+
+.data-form-card vaadin-button {
+  align-self: flex-end;
+}
+
+@media (max-width: 1000px) {
+  .auth-shell {
+    padding: 1.25rem;
+  }
+
+  .data-content {
+    grid-template-columns: 1fr;
+  }
+
+  .data-grid {
+    height: auto;
+    min-height: 320px;
+  }
+}
+
+/* Chat friends */
+.chat-view {
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.friend-panel {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-1);
+}
+
+.friend-list span {
+  display: block;
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--radius-md);
+  background: var(--card-contrast);
+  border: 1px solid var(--border);
+  cursor: pointer;
+}
+
+.friend-list span:hover {
+  border-color: rgba(37, 99, 235, 0.5);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.15);
+}
+
+.friend-accept {
+  margin-left: auto;
+}
