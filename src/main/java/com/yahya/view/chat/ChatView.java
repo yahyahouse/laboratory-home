@@ -1,7 +1,6 @@
 package com.yahya.view.chat;
 
 import com.vaadin.collaborationengine.CollaborationAvatarGroup;
-import com.vaadin.collaborationengine.CollaborationMessageInput;
 import com.vaadin.collaborationengine.CollaborationMessageList;
 import com.vaadin.collaborationengine.UserInfo;
 import com.vaadin.flow.component.AttachEvent;
@@ -33,8 +32,10 @@ import com.vaadin.flow.theme.lumo.LumoUtility.Overflow;
 import com.vaadin.flow.theme.lumo.LumoUtility.Padding;
 import com.vaadin.flow.theme.lumo.LumoUtility.Width;
 import com.vaadin.flow.component.textfield.EmailField;
+import com.yahya.commonlogger.Loggable;
 import com.yahya.model.Friendship;
 import com.yahya.model.Users;
+import com.yahya.service.ChatLoggingService;
 import com.yahya.service.FriendshipService;
 import com.yahya.service.UsersService;
 import com.yahya.view.MainLayout;
@@ -51,22 +52,24 @@ public class ChatView extends HorizontalLayout {
 
     private final UsersService usersService;
     private final FriendshipService friendshipService;
+    private final ChatLoggingService chatLoggingService;
 
     private Users currentUser;
     private Users activeFriend;
     private UserInfo userInfo;
 
     private CollaborationMessageList messageList;
-    private CollaborationMessageInput messageInput;
+    private LoggingCollaborationMessageInput messageInput;
     private final VerticalLayout friendListLayout = new VerticalLayout();
     private final VerticalLayout incomingLayout = new VerticalLayout();
     private final VerticalLayout outgoingLayout = new VerticalLayout();
     private final Span conversationTitle = new Span();
     private final Div emptyState = new Div();
 
-    public ChatView(UsersService usersService, FriendshipService friendshipService) {
+    public ChatView(UsersService usersService, FriendshipService friendshipService, ChatLoggingService chatLoggingService) {
         this.usersService = usersService;
         this.friendshipService = friendshipService;
+        this.chatLoggingService = chatLoggingService;
 
         addClassNames("chat-view", Width.FULL, Display.FLEX, Flex.AUTO);
         setSpacing(false);
@@ -99,8 +102,13 @@ public class ChatView extends HorizontalLayout {
 
         messageList = new CollaborationMessageList(userInfo, friendshipService.topicFor(currentUser.getId(), UUID.randomUUID().toString()));
         messageList.setSizeFull();
-        messageInput = new CollaborationMessageInput(messageList);
+        messageInput = new LoggingCollaborationMessageInput(messageList);
         messageInput.setWidthFull();
+        messageInput.addSubmitListener(event -> chatLoggingService.logChatTransaction(
+                currentUser != null ? currentUser.getId() : null,
+                activeFriend != null ? activeFriend.getId() : null,
+                event.getValue()
+        ));
 
         conversationTitle.addClassName("muted");
         emptyState.setText("Tambah teman dan pilih teman untuk memulai chat.");
@@ -279,4 +287,5 @@ public class ChatView extends HorizontalLayout {
     private void setMobile(boolean mobile) {
         // collapse sidebar? no-op for now
     }
+
 }

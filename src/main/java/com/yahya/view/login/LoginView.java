@@ -1,50 +1,57 @@
 package com.yahya.view.login;
 
-import com.yahya.model.Users;
-import com.yahya.service.JWTService;
-import com.yahya.service.UsersService;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.login.LoginForm;
 import com.vaadin.flow.component.login.LoginI18n;
-import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinSession;
-import lombok.extern.slf4j.Slf4j;
-
+import com.yahya.model.Users;
+import com.yahya.service.JWTService;
+import com.yahya.service.LoginLoggingService;
+import com.yahya.service.UsersService;
 
 @Route(value = "/login", autoLayout = false)
-@Slf4j
-public class LoginView extends VerticalLayout implements BeforeEnterObserver {
+public class LoginView extends Div implements BeforeEnterObserver {
     private final UsersService usersService;
     private final JWTService jwtUtil;
+    private final LoginLoggingService loginLoggingService;
 
-    public LoginView(UsersService usersService, JWTService jwtUtil) {
+    public LoginView(UsersService usersService, JWTService jwtUtil, LoginLoggingService loginLoggingService) {
         this.usersService = usersService;
         this.jwtUtil = jwtUtil;
-        setSizeFull();
-        setPadding(false);
-        setSpacing(false);
-        setAlignItems(Alignment.CENTER);
-        setJustifyContentMode(JustifyContentMode.CENTER);
-        addClassName("auth-shell");
+        this.loginLoggingService = loginLoggingService;
+
+        getStyle()
+                .set("background-color", "var(--lumo-contrast-5pct)")
+                .set("display", "flex")
+                .set("justify-content", "center")
+                .set("align-items", "center")
+                .set("min-height", "100vh")
+                .set("padding", "var(--lumo-space-l)");
 
         Div card = new Div();
-        card.addClassNames("auth-card", "login-card");
+        card.getStyle()
+                .set("padding", "var(--lumo-space-l)")
+                .set("border-radius", "var(--lumo-border-radius-l)")
+                .set("background", "var(--lumo-base-color)")
+                .set("box-shadow", "0 4px 20px rgba(0,0,0,0.08)")
+                .set("width", "360px")
+                .set("display", "flex")
+                .set("flex-direction", "column")
+                .set("gap", "var(--lumo-space-m)");
 
-        H1 title = new H1("Laboratory Home");
-        title.addClassName("auth-title");
-        Paragraph subtitle = new Paragraph("Masuk untuk mengelola dan memantau data laboratorium Anda.");
-        subtitle.addClassName("muted");
+        H1 title = new H1("Masuk");
+        title.getStyle().set("margin", "0");
+
         LoginForm loginForm = new LoginForm();
         loginForm.setI18n(createLoginI18n());
         loginForm.setForgotPasswordButtonVisible(false);
+        loginForm.getElement().setAttribute("no-autofocus", "");
         loginForm.addLoginListener(event -> {
             String email = event.getUsername();
             String password = event.getPassword();
@@ -54,31 +61,33 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
                 String token = jwtUtil.generateToken(user);
                 VaadinSession.getCurrent().setAttribute("user", user.getEmail());
                 VaadinSession.getCurrent().setAttribute("jwt", token);
-                Notification.show("Login successful!", 2000, Notification.Position.BOTTOM_CENTER);
+                loginLoggingService.logLoginAttempt(email, true);
                 loginForm.getUI().ifPresent(ui -> ui.navigate("")); // Redirect to chat (root)
             } else {
+                loginLoggingService.logLoginAttempt(email, false);
                 loginForm.setError(true);
             }
         });
+
         Button registerButton = new Button("Buat akun");
         registerButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
         registerButton.addClickListener(event -> getUI().ifPresent(ui -> ui.navigate("register")));
 
-        card.add(title, subtitle, loginForm, registerButton);
+        card.add(title, loginForm, registerButton);
         add(card);
     }
 
     private LoginI18n createLoginI18n() {
         LoginI18n i18n = LoginI18n.createDefault();
         i18n.setHeader(new LoginI18n.Header());
-        i18n.getHeader().setTitle("Vaadin App");
-        i18n.getHeader().setDescription("Login with your credentials.");
+        i18n.getHeader().setTitle("Laboratory Home");
+        i18n.getHeader().setDescription("Masuk dengan email dan kata sandi.");
         i18n.getForm().setUsername("Email");
         i18n.getForm().setPassword("Password");
         i18n.getForm().setSubmit("Login");
-        i18n.getForm().setForgotPassword("Forgot password?");
-        i18n.getErrorMessage().setTitle("Invalid credentials");
-        i18n.getErrorMessage().setMessage("Check your username and password and try again.");
+        i18n.getForm().setForgotPassword("Lupa kata sandi?");
+        i18n.getErrorMessage().setTitle("Email atau password salah");
+        i18n.getErrorMessage().setMessage("Periksa kembali email dan password Anda.");
         return i18n;
     }
 
@@ -88,7 +97,6 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
         String email = (String) VaadinSession.getCurrent().getAttribute("user");
 
         if (token == null || email == null) {
-            beforeEnterEvent.forwardTo("login");
             return;
         }
 
@@ -96,14 +104,14 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 
         try {
             if (user == null || !jwtUtil.isTokenValid(token, user)) {
-                beforeEnterEvent.forwardTo("login");
+                VaadinSession.getCurrent().setAttribute("jwt", null);
+                VaadinSession.getCurrent().setAttribute("user", null);
+            } else {
+                beforeEnterEvent.forwardTo("");
             }
         } catch (IllegalStateException e) {
-            // Handle token expiration gracefully
             VaadinSession.getCurrent().setAttribute("jwt", null);
             VaadinSession.getCurrent().setAttribute("user", null);
-            beforeEnterEvent.forwardTo("login");
         }
     }
-
 }

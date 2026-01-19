@@ -1,5 +1,7 @@
 package com.yahya.service;
 
+import com.yahya.commonlogger.CommonLoggerProperties;
+import com.yahya.commonlogger.Loggable;
 import com.yahya.model.Friendship;
 import com.yahya.model.FriendshipStatus;
 import com.yahya.model.Users;
@@ -26,6 +28,7 @@ public class FriendshipServiceImpl implements FriendshipService {
 
     @Override
     @Transactional
+    @Loggable
     public Friendship sendRequest(String requesterId, String targetEmail) {
         Users target = usersRepository.findByEmail(targetEmail).orElseThrow(() -> new IllegalArgumentException("Pengguna tidak ditemukan"));
         if (target.getId().equals(requesterId)) {
@@ -58,6 +61,7 @@ public class FriendshipServiceImpl implements FriendshipService {
 
     @Override
     @Transactional
+    @Loggable
     public Friendship accept(String friendshipId, String currentUserId) {
         Friendship friendship = friendshipRepository.findById(friendshipId)
                 .orElseThrow(() -> new IllegalArgumentException("Permintaan tidak ditemukan"));

@@ -1,5 +1,6 @@
 package com.yahya.service;
 
+import com.yahya.commonlogger.Loggable;
 import com.yahya.model.Users;
 import com.yahya.repository.UsersRepository;
 import jakarta.annotation.PostConstruct;
@@ -27,6 +28,7 @@ public class UsersServiceImpl implements UsersService {
         }
     }
     @Override
+    @Loggable
     public void saveUsers(Users users) {
         Optional<Users> user = usersRepository.findByEmail(users.getEmail());
         if (user.isPresent()) {

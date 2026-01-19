@@ -1,5 +1,6 @@
 package com.yahya.service;
 
+import com.yahya.commonlogger.Loggable;
 import com.yahya.model.LoginUser;
 import com.yahya.model.RegisterUser;
 import com.yahya.model.Users;
@@ -27,6 +28,7 @@ public class AuthenticationService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Loggable
     public Users signup(RegisterUser input) {
         Users user = new Users();
         user.setName(input.getName());
@@ -36,6 +38,7 @@ public class AuthenticationService {
         return userRepository.save(user);
     }
 
+    @Loggable
     public Users authenticate(LoginUser input) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
